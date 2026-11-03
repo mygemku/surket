@@ -14,6 +14,8 @@ const requiredFiles = [
   'assets/mp_badge.png',
   'assets/mp_title.png',
   'assets/mp_stempel_sig.png',
+  'js/templates.js',
+  'js/html2canvas.min.js',
   'assets/header.jpg',
   'assets/footer.jpg'
 ];
