@@ -119,13 +119,13 @@
       render: function (data) {
         const reason = data.mp_reason || 'istirahat';
 
-        const circleActive = '<span class="mp-radio mp-radio-active">&#9679;</span>';
-        const circleInactive = '<span class="mp-radio">&#9675;</span>';
+        const boxActive = '<span class="mp-box mp-box-checked"><svg width="15" height="15" viewBox="0 0 16 16" style="vertical-align:middle;display:block;"><rect x="1" y="1" width="14" height="14" rx="1.5" fill="none" stroke="#000" stroke-width="2"/><path d="M4 8.5 L6.8 11.5 L12 4.5" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>';
+        const boxInactive = '<span class="mp-box"><svg width="15" height="15" viewBox="0 0 16 16" style="vertical-align:middle;display:block;"><rect x="1" y="1" width="14" height="14" rx="1.5" fill="none" stroke="#000" stroke-width="2"/></svg></span>';
 
-        const c1 = reason === 'kembali_bekerja' ? circleActive : circleInactive;
-        const c2 = reason === 'istirahat' ? circleActive : circleInactive;
-        const c3 = reason === 'datang_kembali' ? circleActive : circleInactive;
-        const c4 = reason === 'rujuk_rs' ? circleActive : circleInactive;
+        const c1 = reason === 'kembali_bekerja' ? boxActive : boxInactive;
+        const c2 = reason === 'istirahat' ? boxActive : boxInactive;
+        const c3 = reason === 'datang_kembali' ? boxActive : boxInactive;
+        const c4 = reason === 'rujuk_rs' ? boxActive : boxInactive;
 
         const durNum = (data.durasi || '').toString().trim() || '2';
         const tglMulai = esc(data.tgl_mulai || '02 November 2026');

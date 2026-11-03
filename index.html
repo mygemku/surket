@@ -272,16 +272,14 @@ button:active {
   gap: 12px;
 }
 .sheet-mp .mp-bullet {
-  font-size: 14pt;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+.sheet-mp .mp-box {
+  display: inline-block;
   line-height: 1;
-  color: #444;
-}
-.sheet-mp .mp-radio {
-  font-family: monospace;
-}
-.sheet-mp .mp-radio-active {
-  color: #000;
-  font-weight: bold;
 }
 .sheet-mp .mp-reason-text {
   flex: 1;
@@ -481,16 +479,16 @@ button:active {
         <input type="hidden" id="mp_reason" value="istirahat">
         <div class="reason-btn-group">
           <button type="button" class="btn-reason" data-reason="kembali_bekerja" onclick="setReason('kembali_bekerja')">
-            <span class="bullet">&#9675;</span> Dapat kembali bekerja / May return to work
+            <span class="chkbox-icon"></span> Dapat kembali bekerja / May return to work
           </button>
           <button type="button" class="btn-reason active" data-reason="istirahat" onclick="setReason('istirahat')">
-            <span class="bullet">&#9679;</span> Disarankan untuk beristirahat / Complete rest
+            <span class="chkbox-icon"></span> Disarankan untuk beristirahat / Complete rest
           </button>
           <button type="button" class="btn-reason" data-reason="datang_kembali" onclick="setReason('datang_kembali')">
-            <span class="bullet">&#9675;</span> Perlu datang kembali ke klinik / Seen again
+            <span class="chkbox-icon"></span> Perlu datang kembali ke klinik / Seen again
           </button>
           <button type="button" class="btn-reason" data-reason="rujuk_rs" onclick="setReason('rujuk_rs')">
-            <span class="bullet">&#9675;</span> Perlu dirujuk ke Rumah Sakit / Referred to hospital
+            <span class="chkbox-icon"></span> Perlu dirujuk ke Rumah Sakit / Referred to hospital
           </button>
         </div>
       </div>
@@ -616,16 +614,18 @@ function applyDataToForm(data) {
 
 function updateReasonButtons(selectedReason) {
   setVal('mp_reason', selectedReason);
+  const chkSvg = '<svg width="15" height="15" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="#2563eb" stroke="#2563eb" stroke-width="2"/><path d="M4 8.5 L6.8 11.5 L12 4.5" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const unchkSvg = '<svg width="15" height="15" viewBox="0 0 16 16"><rect x="1" y="1" width="14" height="14" rx="2" fill="none" stroke="#94a3b8" stroke-width="2"/></svg>';
+
   document.querySelectorAll('.btn-reason').forEach(function(btn) {
     const r = btn.getAttribute('data-reason');
+    const icon = btn.querySelector('.chkbox-icon');
     if (r === selectedReason) {
       btn.classList.add('active');
-      const b = btn.querySelector('.bullet');
-      if (b) b.innerHTML = '&#9679;';
+      if (icon) icon.innerHTML = chkSvg;
     } else {
       btn.classList.remove('active');
-      const b = btn.querySelector('.bullet');
-      if (b) b.innerHTML = '&#9675;';
+      if (icon) icon.innerHTML = unchkSvg;
     }
   });
 
