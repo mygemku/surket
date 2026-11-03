@@ -45,23 +45,12 @@ it('formatDuration() passes through non-numeric or empty string', () => {
   assert.strictEqual(Surket.formatDuration('3 hari kerja'), '3 hari kerja');
 });
 
-// 3. formatAge
-it('formatAge() formats numeric age correctly', () => {
-  assert.strictEqual(Surket.formatAge('30'), '30 Tahun');
-  assert.strictEqual(Surket.formatAge(45), '45 Tahun');
-});
-
-it('formatAge() preserves existing custom age strings', () => {
-  assert.strictEqual(Surket.formatAge('33 th'), '33 th');
-  assert.strictEqual(Surket.formatAge(''), '-');
-});
-
-// 4. Templates metadata
-it('TEMPLATES registry contains melati and mitra_pratama', () => {
+// 3. Templates metadata
+it('TEMPLATES registry contains melati and mp', () => {
   assert.ok(Surket.TEMPLATES.melati);
-  assert.ok(Surket.TEMPLATES.mitra_pratama);
+  assert.ok(Surket.TEMPLATES.mp);
   assert.strictEqual(Surket.TEMPLATES.melati.orientation, 'landscape');
-  assert.strictEqual(Surket.TEMPLATES.mitra_pratama.orientation, 'portrait');
+  assert.strictEqual(Surket.TEMPLATES.mp.orientation, 'portrait');
 });
 
 console.log(`\nUnit Tests Finished: ${passed} passed, ${failed} failed.\n`);

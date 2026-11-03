@@ -4,6 +4,9 @@ package-lock.json
 
 # Temporary crops / scratch files
 template/crops/
+template/slices/
+template/mp_extracts/
+template/ocr_*.txt
 tools/
 
 # OS metadata

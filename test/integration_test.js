@@ -41,8 +41,9 @@ it('all referenced clinic assets exist with non-zero size', () => {
     'assets/logo.png',
     'assets/stempel.png',
     'assets/qr_dokter.png',
-    'assets/logo_mp.png',
-    'assets/stempel_sig_mp.png'
+    'assets/mp_logo.png',
+    'assets/mp_badge.png',
+    'assets/mp_stempel_sig.png'
   ];
   for (const a of assets) {
     const full = path.join(rootDir, a);
@@ -75,28 +76,36 @@ it('renders Melati Medika with malicious payload cleanly without unescaped tags'
   assert.ok(html.includes('&lt;img src=x onerror=alert(1)&gt;'), 'Img tag escaped');
 });
 
-it('renders Mitra Pratama with custom doctor name and optional end date', () => {
+it('renders Medika Plaza (MP) with reason, company, and doctor sign-off', () => {
   const payload = {
-    templateId: 'mitra_pratama',
-    nomor: '445/099/SKS/KMP/XI/2026',
-    nama: 'Dr. Hendra Wijaya',
-    umur: '40',
+    templateId: 'mp',
+    nama: 'TEGAR PAMUNGKAS',
     jk: 'Laki-Laki',
-    alamat: 'Bogor',
-    pekerjaan: 'PNS',
-    durasi: '3',
-    tgl_mulai: '5 Nov 2026',
-    tgl_selesai: '7 Nov 2026',
-    keterangan: 'Febris Akut',
-    kota: 'Bogor',
-    tgl_surat: '5 Nov 2026',
-    dokter: 'Dewi Sartika'
+    umur: '34',
+    pekerjaan: 'Software Engineer',
+    perusahaan: 'Tech Corp',
+    tgl_klinik: '02 November 2026',
+    mp_reason: 'istirahat',
+    durasi: '2',
+    tgl_mulai: '02 November 2026',
+    tgl_selesai: '03 November 2026',
+    keterangan: 'Acute gastritis',
+    kota: 'Jakarta Selatan',
+    tgl_surat: '02 November 2026',
+    dokter: 'dr. Adinda Syifa Irianti',
+    sip: '5/B.15a/31.74.02.1004.31.K-1.b/4/TM.09.74/e/2024'
   };
-  const html = Surket.TEMPLATES.mitra_pratama.render(payload);
-  assert.ok(html.includes('5 Nov 2026 s/d 7 Nov 2026'));
-  assert.ok(html.includes('( dr. Dewi Sartika )'));
-  assert.ok(html.includes('assets/logo_mp.png'));
-  assert.ok(html.includes('assets/stempel_sig_mp.png'));
+  const html = Surket.TEMPLATES.mp.render(payload);
+  assert.ok(html.includes('SURAT KETERANGAN BEROBAT / SAKIT'));
+  assert.ok(html.includes('ATTENDANCE/ ILLNESS CERTIFICATE'));
+  assert.ok(html.includes('assets/mp_logo.png'));
+  assert.ok(html.includes('assets/mp_badge.png'));
+  assert.ok(html.includes('assets/mp_stempel_sig.png'));
+  assert.ok(html.includes('TEGAR PAMUNGKAS'));
+  assert.ok(html.includes('Tech Corp'));
+  assert.ok(html.includes('dari <b>02 November 2026</b> s.d <b>03 November 2026</b>'));
+  assert.ok(html.includes('(dr. Adinda Syifa Irianti)'));
+  assert.ok(html.includes('Acute gastritis'));
 });
 
 console.log(`\nIntegration Tests Finished: ${passed} passed, ${failed} failed.\n`);

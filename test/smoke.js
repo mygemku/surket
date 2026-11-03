@@ -10,8 +10,9 @@ const requiredFiles = [
   'assets/logo.png',
   'assets/stempel.png',
   'assets/qr_dokter.png',
-  'assets/logo_mp.png',
-  'assets/stempel_sig_mp.png'
+  'assets/mp_logo.png',
+  'assets/mp_badge.png',
+  'assets/mp_stempel_sig.png'
 ];
 
 let errors = 0;

@@ -92,88 +92,167 @@
       }
     },
 
-    mitra_pratama: {
-      id: 'mitra_pratama',
-      name: 'Klinik Mitra Pratama (A4 Portrait)',
+    mp: {
+      id: 'mp',
+      name: 'Medika Plaza (A4 Portrait)',
       orientation: 'portrait',
       sheetClass: 'sheet-mp',
       pageSizeCss: 'A4 portrait',
       defaultValues: {
-        nomor: '445/082/SKS/KMP/XI/2026',
-        nama: 'AURA KASIH',
-        umur: '26',
-        jk: 'Perempuan',
-        alamat: 'Kp. Pasir Angin RT 02/01 Cileungsi, Bogor',
-        pekerjaan: 'Karyawan Swasta',
+        nama: 'TEGAR PAMUNGKAS',
+        jk: 'Laki-Laki',
+        umur: '34',
+        pekerjaan: '-',
+        perusahaan: '-',
+        tgl_klinik: '02 November 2026',
+        mp_reason: 'istirahat',
         durasi: '2',
-        tgl_mulai: '3 November 2026',
-        tgl_selesai: '4 November 2026',
-        keterangan: 'Dyspepsia Syndrome + Cephalgia',
-        kota: 'Bogor',
-        tgl_surat: '3 November 2026',
-        dokter: 'Siti Sarah'
+        tgl_mulai: '02 November 2026',
+        tgl_selesai: '03 November 2026',
+        tgl_kembali: '-',
+        keterangan: 'Acute gastritis',
+        kota: 'Jakarta Selatan',
+        tgl_surat: '02 November 2026',
+        dokter: 'dr. Adinda Syifa Irianti',
+        sip: '5/B.15a/31.74.02.1004.31.K-1.b/4/TM.09.74/e/2024'
       },
       render: function (data) {
-        const sd = data.tgl_selesai && data.tgl_selesai.trim()
-          ? ' s/d ' + esc(data.tgl_selesai.trim())
-          : '';
+        const reason = data.mp_reason || 'istirahat';
 
-        const bioRows = [
-          ['Nama', data.nama],
-          ['Umur', formatAge(data.umur)],
-          ['Jenis Kelamin', data.jk],
-          ['Pekerjaan', data.pekerjaan || '-'],
-          ['Alamat', data.alamat]
-        ].map(function (x) {
-          return '<div class="row-label">' + esc(x[0]) + '</div><div class="row-colon">:</div><div class="row-val">' + esc(x[1]) + '</div>';
-        }).join('');
+        const circleActive = '<span class="mp-radio mp-radio-active">&#9679;</span>';
+        const circleInactive = '<span class="mp-radio">&#9675;</span>';
+
+        const c1 = reason === 'kembali_bekerja' ? circleActive : circleInactive;
+        const c2 = reason === 'istirahat' ? circleActive : circleInactive;
+        const c3 = reason === 'datang_kembali' ? circleActive : circleInactive;
+        const c4 = reason === 'rujuk_rs' ? circleActive : circleInactive;
+
+        const durNum = (data.durasi || '').toString().trim() || '2';
+        const tglMulai = esc(data.tgl_mulai || '02 November 2026');
+        const tglSelesai = esc(data.tgl_selesai || '03 November 2026');
+        const tglKembali = esc(data.tgl_kembali || '-');
 
         const doctorDisplay = data.dokter && data.dokter.trim()
-          ? '( dr. ' + esc(data.dokter.trim()) + ' )'
-          : '( dr. .................................................... )';
+          ? '(' + esc(data.dokter.trim()) + ')'
+          : '(dr. Adinda Syifa Irianti)';
+
+        const sipDisplay = data.sip && data.sip.trim()
+          ? 'SIP. ' + esc(data.sip.trim())
+          : 'SIP. 5/B.15a/31.74.02.1004.31.K-1.b/4/TM.09.74/e/2024';
 
         return '' +
-          '<div class="kop-mp">' +
-            '<div class="kop-mp-logo"><img src="assets/logo_mp.png" alt="Logo Mitra Pratama"></div>' +
-            '<div class="kop-mp-text">' +
-              '<div class="kop-title-small">KLINIK PRATAMA RAWAT INAP</div>' +
-              '<div class="kop-title-main">MITRA PRATAMA</div>' +
-              '<div class="kop-sub-bold">IZIN OPERASIONAL : 445/002/00346/DPMPTSP/2021</div>' +
-              '<div class="kop-sub">Jl. Raya Cileungsi - Setu Km. 3 Kp. Cipicung Rt. 011 Rw. 004 Ds. Mekarsari</div>' +
-              '<div class="kop-sub">Kec. Cileungsi Kab. Bogor 16820 Telp. 0812-9000-8515 / 0813-8888-2936</div>' +
-              '<div class="kop-sub">Email : klinikmitrapratama.bogor@gmail.com</div>' +
+          '<div class="mp-header">' +
+            '<div class="mp-logo-box"><img src="assets/mp_logo.png" alt="Medika Plaza Logo"></div>' +
+            '<div class="mp-badge-box"><img src="assets/mp_badge.png" alt="25 Years of Innovation"></div>' +
+          '</div>' +
+
+          '<div class="mp-title-box">' +
+            '<div class="mp-title-id">SURAT KETERANGAN BEROBAT / SAKIT</div>' +
+            '<div class="mp-title-en">ATTENDANCE/ ILLNESS CERTIFICATE</div>' +
+          '</div>' +
+
+          '<div class="mp-intro">' +
+            '<div>Yang bertanda tangan dibawah ini menerangkan bahwa:</div>' +
+            '<div class="mp-en">This is to certify that:</div>' +
+          '</div>' +
+
+          '<div class="mp-bio-table">' +
+            '<div class="mp-bio-row">' +
+              '<div class="mp-bio-lbl">Nama / <i>Name</i></div>' +
+              '<div class="mp-bio-colon">:</div>' +
+              '<div class="mp-bio-val">' + esc(data.nama) + '</div>' +
+            '</div>' +
+            '<div class="mp-bio-row">' +
+              '<div class="mp-bio-lbl">Jenis Kelamin / <i>Sex</i></div>' +
+              '<div class="mp-bio-colon">:</div>' +
+              '<div class="mp-bio-val">' + esc(data.jk) + '</div>' +
+            '</div>' +
+            '<div class="mp-bio-row">' +
+              '<div class="mp-bio-lbl">Umur / <i>Age</i></div>' +
+              '<div class="mp-bio-colon">:</div>' +
+              '<div class="mp-bio-val">' + esc(data.umur) + '</div>' +
+            '</div>' +
+            '<div class="mp-bio-row">' +
+              '<div class="mp-bio-lbl">Pekerjaan / <i>Occupation</i></div>' +
+              '<div class="mp-bio-colon">:</div>' +
+              '<div class="mp-bio-val">' + esc(data.pekerjaan || '-') + '</div>' +
+            '</div>' +
+            '<div class="mp-bio-row">' +
+              '<div class="mp-bio-lbl">Perusahaan / <i>Company</i></div>' +
+              '<div class="mp-bio-colon">:</div>' +
+              '<div class="mp-bio-val">' + esc(data.perusahaan || '-') + '</div>' +
             '</div>' +
           '</div>' +
-          '<div class="garis-ganda"></div>' +
-          '<div class="judul-mp">' +
-            '<h2>SURAT KETERANGAN SAKIT</h2>' +
-            '<div class="nomor-mp">Nomor : ' + esc(data.nomor) + '</div>' +
+
+          '<div class="mp-attend">' +
+            '<div>Telah datang ke klinik pada Tanggal <b>' + esc(data.tgl_klinik || data.tgl_surat) + '</b> yang bersangkutan :</div>' +
+            '<div class="mp-en">Has attended to the clinic on <b>' + esc(data.tgl_klinik || data.tgl_surat) + '</b> the patient :</div>' +
           '</div>' +
-          '<div class="paragraf-mp">' +
-            'Yang bertanda tangan di bawah ini, Dokter Klinik Pratama Rawat Inap Mitra Pratama menerangkan bahwa :' +
-          '</div>' +
-          '<div class="bio-mp">' + bioRows + '</div>' +
-          '<div class="detail-sakit-mp">' +
-            '<div class="detail-row"><span class="d-label">Perlu beristirahat karena sakit selama</span><span class="d-colon">:</span><span class="d-val">' + esc(formatDuration(data.durasi)) + '</span></div>' +
-            '<div class="detail-row"><span class="d-label">Terhitung mulai tanggal</span><span class="d-colon">:</span><span class="d-val">' + esc(data.tgl_mulai) + sd + '</span></div>' +
-            '<div class="detail-row"><span class="d-label">Diagnosa</span><span class="d-colon">:</span><span class="d-val">' + esc(data.keterangan) + '</span></div>' +
-          '</div>' +
-          '<div class="paragraf-mp">' +
-            'Demikian surat keterangan ini diberikan untuk dapat dipergunakan sebagaimana mestinya.' +
-          '</div>' +
-          '<div class="ttd-mp-container">' +
-            '<div class="ttd-mp-box">' +
-              '<div class="ttd-mp-kota">' + esc(data.kota) + ', ' + esc(data.tgl_surat) + '</div>' +
-              '<div class="ttd-mp-jabatan">Dokter Pemeriksa,</div>' +
-              '<div class="ttd-mp-stamp-wrap">' +
-                '<img src="assets/stempel_sig_mp.png" alt="Stempel & Tanda Tangan Dokter">' +
+
+          '<div class="mp-reasons">' +
+            '<div class="mp-reason-item">' +
+              '<div class="mp-bullet">' + c1 + '</div>' +
+              '<div class="mp-reason-text">' +
+                '<div>Dapat kembali bekerja</div>' +
+                '<div class="mp-en">May return to work</div>' +
               '</div>' +
-              '<div class="ttd-mp-nama">' + doctorDisplay + '</div>' +
             '</div>' +
-          '</div>';
+
+            '<div class="mp-reason-item">' +
+              '<div class="mp-bullet">' + c2 + '</div>' +
+              '<div class="mp-reason-text">' +
+                '<div>Disarankan untuk beristirahat selama : <b>' + durNum + '</b> hari, dari <b>' + tglMulai + '</b> s.d <b>' + tglSelesai + '</b></div>' +
+                '<div class="mp-en">Should have a complete rest for : <b>' + durNum + '</b> day (s), from <b>' + tglMulai + '</b> to <b>' + tglSelesai + '</b></div>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="mp-reason-item">' +
+              '<div class="mp-bullet">' + c3 + '</div>' +
+              '<div class="mp-reason-text">' +
+                '<div>Perlu datang kembali ke klinik pada : <b>' + tglKembali + '</b></div>' +
+                '<div class="mp-en">Need to be seen again at clinic on : <b>' + tglKembali + '</b></div>' +
+              '</div>' +
+            '</div>' +
+
+            '<div class="mp-reason-item">' +
+              '<div class="mp-bullet">' + c4 + '</div>' +
+              '<div class="mp-reason-text">' +
+                '<div>Perlu dirujuk ke Rumah Sakit untuk mendapatkan pemeriksaan lebih lanjut</div>' +
+                '<div class="mp-en">Need to be referred to hospital for further treatment</div>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="mp-comments">' +
+            '<div class="mp-comm-lbl">Keterangan / <i>Comments</i> :</div>' +
+            '<div class="mp-comm-val">' + esc(data.keterangan || '-') + '</div>' +
+          '</div>' +
+
+          '<div class="mp-bottom-area">' +
+            '<div class="mp-footer-left">' +
+              '<div class="mp-foot-clinic">CLINIC WTC II</div>' +
+              '<div class="mp-foot-addr">WTC II, Jl. Jend. Sudirman Kav 29-31</div>' +
+              '<div class="mp-foot-addr">Jakarta Selatan Jakarta Indonesia 12920 Tlp. : (62-21) 295 22 611</div>' +
+              '<div class="mp-foot-web">www.medikaplaza.com</div>' +
+            '</div>' +
+
+            '<div class="mp-sign-right">' +
+              '<div class="mp-sign-date">' + esc(data.kota || 'Jakarta Selatan') + ', ' + esc(data.tgl_surat || '02 November 2026') + '</div>' +
+              '<div class="mp-stamp-wrap">' +
+                '<img src="assets/mp_stempel_sig.png" alt="Stempel & Tanda Tangan">' +
+              '</div>' +
+              '<div class="mp-sign-pt">PT. KARTIKA BINA MEDIKATAMA</div>' +
+              '<div class="mp-sign-doc">' + doctorDisplay + '</div>' +
+              '<div class="mp-sign-sip">' + sipDisplay + '</div>' +
+            '</div>' +
+          '</div>' +
+
+          '<div class="mp-page-code">918</div>';
       }
     }
   };
+
+  TEMPLATES.mitra_pratama = TEMPLATES.mp;
 
   const Surket = {
     TEMPLATES: TEMPLATES,
