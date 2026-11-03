@@ -147,8 +147,7 @@
           '</div>' +
 
           '<div class="mp-title-box">' +
-            '<div class="mp-title-id">SURAT KETERANGAN BEROBAT / SAKIT</div>' +
-            '<div class="mp-title-en">ATTENDANCE/ ILLNESS CERTIFICATE</div>' +
+            '<img src="assets/mp_title.png" alt="SURAT KETERANGAN BEROBAT / SAKIT - ATTENDANCE/ ILLNESS CERTIFICATE" class="mp-title-img">' +
           '</div>' +
 
           '<div class="mp-intro">' +
