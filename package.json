@@ -1,0 +1,17 @@
+{
+  "name": "surket",
+  "version": "1.0.0",
+  "description": "Surat Keterangan Sakit & Dokter generator with multi-template live preview, PDF print, and DOC export",
+  "scripts": {
+    "start": "npx serve .",
+    "test": "node test/smoke.js && node test/unit_test.js && node test/integration_test.js"
+  },
+  "keywords": [
+    "surat-keterangan",
+    "sks",
+    "klinik",
+    "medical-certificate"
+  ],
+  "author": "",
+  "license": "MIT"
+}

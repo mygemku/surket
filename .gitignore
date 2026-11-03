@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Temporary crops / scratch files
+template/crops/
+tools/
+
+# OS metadata
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log

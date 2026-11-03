@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Surat Keterangan Sakit & Dokter Generator</title>
+<link rel="icon" href="assets/logo_mp.png" type="image/png">
+<style id="page-print-style">
+@page { size: 277mm 180mm landscape; margin: 0; }
+</style>
+<style>
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: #eef2f6;
+  margin: 0;
+  padding: 16px;
+  color: #333;
+}
+.wrap {
+  max-width: 1380px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 1024px) {
+  .wrap { grid-template-columns: 1fr; }
+}
+
+/* Sidebar Form */
+form#f {
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  font-family: inherit;
+}
+form#f h3 {
+  margin: 0 0 14px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+.form-group {
+  margin-bottom: 11px;
+}
+label {
+  display: block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 7px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 13.5px;
+  color: #1e293b;
+  font-family: inherit;
+  background: #fff;
+  transition: border-color 0.15s ease;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+textarea {
+  resize: vertical;
+  min-height: 54px;
+}
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 16px;
+}
+button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+button:active {
+  transform: scale(0.98);
+}
+#print { background: #2563eb; color: #fff; }
+#print:hover { background: #1d4ed8; }
+#doc { background: #059669; color: #fff; }
+#doc:hover { background: #047857; }
+#reset {
+  grid-column: span 2;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  padding: 7px;
+  font-size: 12.5px;
+}
+#reset:hover { background: #e2e8f0; }
+
+.note {
+  font-size: 12px;
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 9px;
+  margin-top: 14px;
+  line-height: 1.4;
+}
+
+/* Sheet Preview Wrapper */
+.preview-pane {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: auto;
+  padding-bottom: 24px;
+}
+#sheet {
+  background: #ffffff;
+  color: #000;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transition: all 0.2s ease;
+}
+
+/* Template 1: Melati Medika (Landscape) */
+#sheet.sheet-melati {
+  width: 277mm;
+  min-height: 180mm;
+  padding: 12mm 15mm;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12pt;
+}
+.sheet-melati .kop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.sheet-melati .kop img { width: 65px; height: auto; }
+.sheet-melati .kop .t { flex: 1; text-align: center; }
+.sheet-melati .kop .t b { font-size: 17pt; }
+.sheet-melati .kop .t small { font-size: 9.5pt; }
+.sheet-melati .garis { border-top: 2px solid #000; margin: 8px 0 12px; }
+.sheet-melati h2 { text-align: center; text-decoration: underline; font-size: 15pt; margin: 6px 0 2px; }
+.sheet-melati .nomor { text-align: center; margin-bottom: 10px; }
+.sheet-melati .bio { display: grid; grid-template-columns: 110px 12px 1fr; margin: 6px 0 6px 30px; }
+.sheet-melati .body { text-align: justify; line-height: 1.5; }
+.sheet-melati .ket { font-style: italic; margin: 10px 0 0; }
+.sheet-melati .ttd-row { display: flex; justify-content: flex-start; align-items: flex-start; gap: 55px; margin-top: 6px; }
+.sheet-melati .ttd-row .st { margin-left: 480px; }
+.sheet-melati .ttd-row .st img { width: 120px; }
+.sheet-melati .ttd-row .qr { width: 250px; text-align: center; line-height: 1.5; }
+.sheet-melati .ttd-row .qr img { width: 235px; max-width: 100%; }
+.sheet-melati .cetak { font-size: 8pt; margin-top: 35px; color: #555; }
+
+/* Template 2: Mitra Pratama (Portrait A4) */
+#sheet.sheet-mp {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 16mm 20mm;
+  font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  font-size: 11pt;
+}
+.sheet-mp .kop-mp {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.sheet-mp .kop-mp-logo img {
+  width: 90px;
+  height: auto;
+  display: block;
+}
+.sheet-mp .kop-mp-text {
+  flex: 1;
+  text-align: center;
+}
+.sheet-mp .kop-title-small {
+  font-size: 11pt;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #000;
+}
+.sheet-mp .kop-title-main {
+  font-size: 18pt;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: #0b2545;
+  margin: 1px 0;
+}
+.sheet-mp .kop-sub-bold {
+  font-size: 9pt;
+  font-weight: 700;
+  color: #000;
+  margin: 1px 0;
+}
+.sheet-mp .kop-sub {
+  font-size: 8pt;
+  color: #111;
+  line-height: 1.35;
+}
+.sheet-mp .garis-ganda {
+  border-top: 3px solid #000;
+  border-bottom: 1px solid #000;
+  height: 2px;
+  margin: 8px 0 16px 0;
+}
+.sheet-mp .judul-mp {
+  text-align: center;
+  margin: 12px 0 14px 0;
+}
+.sheet-mp .judul-mp h2 {
+  font-size: 14pt;
+  font-weight: 800;
+  text-decoration: underline;
+  margin: 0;
+}
+.sheet-mp .nomor-mp {
+  font-size: 11pt;
+  margin-top: 4px;
+}
+.sheet-mp .paragraf-mp {
+  font-size: 11pt;
+  line-height: 1.6;
+  margin: 12px 0;
+  text-align: justify;
+}
+.sheet-mp .bio-mp {
+  display: grid;
+  grid-template-columns: 135px 15px 1fr;
+  row-gap: 5px;
+  margin: 8px 0 12px 30px;
+  font-size: 11pt;
+}
+.sheet-mp .detail-sakit-mp {
+  margin: 8px 0 12px 30px;
+  font-size: 11pt;
+}
+.sheet-mp .detail-row {
+  display: grid;
+  grid-template-columns: 275px 15px 1fr;
+  margin-bottom: 5px;
+}
+.sheet-mp .ttd-mp-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+.sheet-mp .ttd-mp-box {
+  width: 280px;
+  text-align: center;
+  font-size: 11pt;
+}
+.sheet-mp .ttd-mp-stamp-wrap {
+  margin: 4px 0;
+  height: 115px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sheet-mp .ttd-mp-stamp-wrap img {
+  max-height: 115px;
+  max-width: 250px;
+  display: block;
+}
+.sheet-mp .ttd-mp-nama {
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Print Settings */
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+    margin: 0;
+  }
+  form#f, .noprint {
+    display: none !important;
+  }
+  .wrap {
+    display: block;
+    max-width: none;
+    margin: 0;
+  }
+  .preview-pane {
+    padding: 0;
+    display: block;
+  }
+  #sheet {
+    box-shadow: none !important;
+    margin: 0 auto !important;
+  }
+  #sheet.sheet-melati {
+    width: 277mm !important;
+    min-height: 180mm !important;
+    padding: 10mm 15mm !important;
+  }
+  #sheet.sheet-mp {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    padding: 14mm 18mm !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <form id="f" class="noprint" oninput="handleInput()">
+    <h3>Generator Surat Keterangan</h3>
+
+    <div class="form-group">
+      <label for="template_id">Pilih Format / Template Klinik</label>
+      <select id="template_id" onchange="switchTemplate(this.value)">
+        <option value="melati">Klinik Melati Medika (Landscape)</option>
+        <option value="mitra_pratama">Klinik Mitra Pratama (A4 Portrait)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="nomor">Nomor Surat</label>
+      <input id="nomor" value="SKK/VII/2026/00003">
+    </div>
+
+    <div class="form-group">
+      <label for="nama">Nama Pasien</label>
+      <input id="nama" value="TEGAR PAMUNGKAS">
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="umur">Umur</label>
+        <input id="umur" value="33 th">
+      </div>
+      <div class="form-group">
+        <label for="jk">Jenis Kelamin</label>
+        <select id="jk">
+          <option>Laki-Laki</option>
+          <option>Perempuan</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pekerjaan">Pekerjaan</label>
+      <input id="pekerjaan" value="">
+    </div>
+
+    <div class="form-group">
+      <label for="alamat">Alamat</label>
+      <textarea id="alamat">JL ANTENA II GG II NO 9A</textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="durasi">Lama Istirahat (hari, angka)</label>
+      <input id="durasi" value="1">
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="tgl_mulai">Mulai Tanggal</label>
+        <input id="tgl_mulai" value="1 Juli 2026">
+      </div>
+      <div class="form-group">
+        <label for="tgl_selesai">s/d Tanggal (opsional)</label>
+        <input id="tgl_selesai" value="">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="keterangan">Keterangan / Diagnosa Medis</label>
+      <textarea id="keterangan">Diagnosis: Acute upper respiratory infection, unspecified.</textarea>
+    </div>
+
+    <div class="row-2">
+      <div class="form-group">
+        <label for="kota">Kota Terbit</label>
+        <input id="kota" value="Depok">
+      </div>
+      <div class="form-group">
+        <label for="tgl_surat">Tanggal Surat</label>
+        <input id="tgl_surat" value="1 Juli 2026">
+      </div>
+    </div>
+
+    <div class="form-group" id="group_dokter">
+      <label for="dokter">Nama Dokter Pemeriksa</label>
+      <input id="dokter" value="" placeholder="dr. Nama Dokter">
+    </div>
+
+    <div class="btns">
+      <button type="button" id="print" onclick="doPrint()">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v4a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>
+        Cetak / PDF
+      </button>
+      <button type="button" id="doc" onclick="dlDoc()">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+        Unduh DOC
+      </button>
+      <button type="button" id="reset" onclick="resetDefaults()">Reset ke Contoh Template Ini</button>
+    </div>
+
+    <div class="note">
+      Stempel dan tanda tangan dokter ditempel otomatis sesuai template klinik. Preview akan update otomatis saat Anda mengetik.
+    </div>
+  </form>
+
+  <div class="preview-pane">
+    <div id="sheet" class="sheet-melati"></div>
+  </div>
+</div>
+
+<script src="js/templates.js"></script>
+<script>
+const FIELD_IDS = [
+  'nomor', 'nama', 'umur', 'jk', 'pekerjaan', 'alamat',
+  'durasi', 'tgl_mulai', 'tgl_selesai', 'keterangan',
+  'kota', 'tgl_surat', 'dokter'
+];
+
+function val(id) {
+  const el = document.getElementById(id);
+  return el ? el.value : '';
+}
+
+function setVal(id, v) {
+  const el = document.getElementById(id);
+  if (el) el.value = (v === undefined || v === null) ? '' : v;
+}
+
+function getFormData() {
+  const data = { templateId: val('template_id') || 'melati' };
+  FIELD_IDS.forEach(function(k) { data[k] = val(k); });
+  return data;
+}
+
+function applyDataToForm(data) {
+  if (data.templateId) setVal('template_id', data.templateId);
+  FIELD_IDS.forEach(function(k) {
+    if (data[k] !== undefined) setVal(k, data[k]);
+  });
+}
+
+function updatePrintPageStyle(tplConfig) {
+  const styleEl = document.getElementById('page-print-style');
+  if (styleEl && tplConfig && tplConfig.pageSizeCss) {
+    styleEl.innerHTML = '@page { size: ' + tplConfig.pageSizeCss + '; margin: 0; }';
+  }
+}
+
+function render() {
+  const tplId = val('template_id') || 'melati';
+  const tpl = Surket.TEMPLATES[tplId] || Surket.TEMPLATES.melati;
+  const sheet = document.getElementById('sheet');
+
+  sheet.className = tpl.sheetClass;
+  updatePrintPageStyle(tpl);
+
+  const data = getFormData();
+  sheet.innerHTML = tpl.render(data);
+}
+
+function handleInput() {
+  render();
+  saveDraft();
+}
+
+function switchTemplate(tplId) {
+  const tpl = Surket.TEMPLATES[tplId];
+  if (!tpl) return;
+
+  // If doctor field is empty when switching to Mitra Pratama, populate default doctor
+  if (tplId === 'mitra_pratama' && !val('dokter')) {
+    setVal('dokter', tpl.defaultValues.dokter);
+  }
+
+  // If switching template and user wants template's default number/city
+  if (tplId === 'mitra_pratama' && val('kota') === 'Depok') {
+    setVal('kota', 'Bogor');
+  } else if (tplId === 'melati' && val('kota') === 'Bogor') {
+    setVal('kota', 'Depok');
+  }
+
+  render();
+  saveDraft();
+}
+
+function resetDefaults() {
+  const tplId = val('template_id') || 'melati';
+  const tpl = Surket.TEMPLATES[tplId];
+  if (tpl && confirm('Kembalikan isian formulir ke contoh template ' + tpl.name + '?')) {
+    applyDataToForm(tpl.defaultValues);
+    render();
+    saveDraft();
+  }
+}
+
+function saveDraft() {
+  try {
+    localStorage.setItem('surket_draft_v1', JSON.stringify(getFormData()));
+  } catch (e) {}
+}
+
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem('surket_draft_v1');
+    if (raw) {
+      const data = JSON.parse(raw);
+      applyDataToForm(data);
+    }
+  } catch (e) {}
+}
+
+function doPrint() {
+  window.print();
+}
+
+function dlDoc() {
+  const sheet = document.getElementById('sheet');
+  const tplId = val('template_id') || 'melati';
+  const patientName = (val('nama') || 'surat').trim().replace(/\W+/g, '_');
+  const filename = 'sks_' + tplId + '_' + patientName + '.doc';
+
+  const docHtml = '<html xmlns:o="urn:schemas-microsoft-com:office:office" ' +
+    'xmlns:w="urn:schemas-microsoft-com:office:word" ' +
+    'xmlns="http://www.w3.org/TR/REC-html40">' +
+    '<head><meta charset="utf-8">' +
+    '<style>' +
+    'body { font-family: Arial, "Times New Roman", sans-serif; font-size: 11pt; } ' +
+    'table { border-collapse: collapse; width: 100%; } ' +
+    '.garis { border-top: 2px solid #000; margin: 8px 0; } ' +
+    '.garis-ganda { border-top: 3px solid #000; border-bottom: 1px solid #000; height: 2px; margin: 8px 0 16px 0; } ' +
+    '</style></head><body>' +
+    sheet.innerHTML +
+    '</body></html>';
+
+  const blob = new Blob(['\ufeff', docHtml], { type: 'application/msword' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(a.href);
+}
+
+// Initial bootstrap
+loadDraft();
+render();
+</script>
+</body>
+</html>
