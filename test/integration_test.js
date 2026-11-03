@@ -44,7 +44,7 @@ it('all referenced clinic assets exist with non-zero size', () => {
     'assets/mp_logo.png',
     'assets/mp_badge.png',
     'assets/mp_stempel_sig.png',
-    'assets/mp_helpline.png'
+    'assets/footer.jpg'
   ];
   for (const a of assets) {
     const full = path.join(rootDir, a);

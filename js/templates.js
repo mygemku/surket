@@ -241,15 +241,7 @@
           '</div>' +
 
           '<div class="mp-page-footer">' +
-            '<div class="mp-footer-clinic">' +
-              '<div class="mp-clinic-name">CLINIC WTC II</div>' +
-              '<div>WTC II, Jl. Jend. Sudirman Kav. 29-31</div>' +
-              '<div>Jakarta Selatan Jakarta Indonesia 12920 Tlp. : (62-21) 295 22 611</div>' +
-              '<div class="mp-clinic-web">www.medikaplaza.com</div>' +
-            '</div>' +
-            '<div class="mp-footer-helpline">' +
-              '<img src="assets/mp_helpline.png" alt="24/7 Helpline 1500 918">' +
-            '</div>' +
+            '<img src="assets/footer.jpg" alt="Footer Medika Plaza">' +
           '</div>';
       }
     }
