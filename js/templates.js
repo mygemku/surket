@@ -136,8 +136,9 @@
           ? '(' + esc(data.dokter.trim()) + ')'
           : '(dr. Adinda Syifa Irianti)';
 
-        const sipDisplay = data.sip && data.sip.trim()
-          ? 'SIP. ' + esc(data.sip.trim())
+        const sipRaw = (data.sip || '').trim();
+        const sipDisplay = sipRaw
+          ? (sipRaw.startsWith('SIP.') ? esc(sipRaw) : 'SIP. ' + esc(sipRaw))
           : 'SIP. 5/B.15a/31.74.02.1004.31.K-1.b/4/TM.09.74/e/2024';
 
         return '' +
