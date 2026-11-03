@@ -14,6 +14,7 @@ const requiredFiles = [
   'assets/mp_badge.png',
   'assets/mp_title.png',
   'assets/mp_stempel_sig.png',
+  'assets/header.jpg',
   'assets/footer.jpg'
 ];
 

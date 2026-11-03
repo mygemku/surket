@@ -45,6 +45,7 @@ it('all referenced clinic assets exist with non-zero size', () => {
     'assets/mp_badge.png',
     'assets/mp_title.png',
     'assets/mp_stempel_sig.png',
+    'assets/header.jpg',
     'assets/footer.jpg'
   ];
   for (const a of assets) {
@@ -100,9 +101,9 @@ it('renders Medika Plaza (MP) with reason, company, and doctor sign-off', () => 
   const html = Surket.TEMPLATES.mp.render(payload);
   assert.ok(html.includes('SURAT KETERANGAN BEROBAT / SAKIT'));
   assert.ok(html.includes('ATTENDANCE/ ILLNESS CERTIFICATE'));
-  assert.ok(html.includes('assets/mp_logo.png'));
-  assert.ok(html.includes('assets/mp_badge.png'));
+  assert.ok(html.includes('assets/header.jpg'));
   assert.ok(html.includes('assets/mp_stempel_sig.png'));
+  assert.ok(html.includes('assets/footer.jpg'));
   assert.ok(html.includes('TEGAR PAMUNGKAS'));
   assert.ok(html.includes('Tech Corp'));
   assert.ok(html.includes('dari <b>02 November 2026</b> s.d <b>03 November 2026</b>'));

@@ -142,8 +142,7 @@
 
         return '' +
           '<div class="mp-header">' +
-            '<div class="mp-logo-box"><img src="assets/mp_logo.png" alt="Medika Plaza Logo"></div>' +
-            '<div class="mp-badge-box"><img src="assets/mp_badge.png" alt="25 Years of Innovation"></div>' +
+            '<img src="assets/header.jpg" alt="Medika Plaza Header" class="mp-header-img">' +
           '</div>' +
 
           '<div class="mp-title-box">' +
