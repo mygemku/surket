@@ -12,7 +12,8 @@ const requiredFiles = [
   'assets/qr_dokter.png',
   'assets/mp_logo.png',
   'assets/mp_badge.png',
-  'assets/mp_stempel_sig.png'
+  'assets/mp_stempel_sig.png',
+  'assets/mp_helpline.png'
 ];
 
 let errors = 0;

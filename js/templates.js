@@ -228,15 +228,8 @@
             '<div class="mp-comm-val">' + esc(data.keterangan || '-') + '</div>' +
           '</div>' +
 
-          '<div class="mp-bottom-area">' +
-            '<div class="mp-footer-left">' +
-              '<div class="mp-foot-clinic">CLINIC WTC II</div>' +
-              '<div class="mp-foot-addr">WTC II, Jl. Jend. Sudirman Kav 29-31</div>' +
-              '<div class="mp-foot-addr">Jakarta Selatan Jakarta Indonesia 12920 Tlp. : (62-21) 295 22 611</div>' +
-              '<div class="mp-foot-web">www.medikaplaza.com</div>' +
-            '</div>' +
-
-            '<div class="mp-sign-right">' +
+          '<div class="mp-sign-section">' +
+            '<div class="mp-sign-box">' +
               '<div class="mp-sign-date">' + esc(data.kota || 'Jakarta Selatan') + ', ' + esc(data.tgl_surat || '02 November 2026') + '</div>' +
               '<div class="mp-stamp-wrap">' +
                 '<img src="assets/mp_stempel_sig.png" alt="Stempel & Tanda Tangan">' +
@@ -247,7 +240,17 @@
             '</div>' +
           '</div>' +
 
-          '<div class="mp-page-code">918</div>';
+          '<div class="mp-page-footer">' +
+            '<div class="mp-footer-clinic">' +
+              '<div class="mp-clinic-name">CLINIC WTC II</div>' +
+              '<div>WTC II, Jl. Jend. Sudirman Kav. 29-31</div>' +
+              '<div>Jakarta Selatan Jakarta Indonesia 12920 Tlp. : (62-21) 295 22 611</div>' +
+              '<div class="mp-clinic-web">www.medikaplaza.com</div>' +
+            '</div>' +
+            '<div class="mp-footer-helpline">' +
+              '<img src="assets/mp_helpline.png" alt="24/7 Helpline 1500 918">' +
+            '</div>' +
+          '</div>';
       }
     }
   };

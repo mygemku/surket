@@ -6,7 +6,9 @@ package-lock.json
 template/crops/
 template/slices/
 template/mp_extracts/
+template/footer_crops/
 template/ocr_*.txt
+template/footer_ocr.txt
 tools/
 
 # OS metadata
